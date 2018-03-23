@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="cn.intret.lab.loadingtogglebutton.MainActivity">
 
-    <cn.intret.lab.library.DayNightToggleButton
+    <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -15,11 +15,12 @@
         android:layout_marginTop="16dp"
         android:layout_width="50dp"
         android:layout_height="25dp"
-        app:dnBackgroundCheckedColor="@android:color/black"
-        app:dnBackgroundUncheckedColor="@android:color/black"
-        app:dnToggleCheckedColor="@android:color/white"
-        app:dnToggleUncheckedColor="@android:color/white"
-        app:dnDuration="300"
+        app:ltbChecked="true"
+        app:ltbBackgroundCheckedColor="@color/colorAccent"
+        app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
+        app:ltbToggleCheckedColor="@android:color/white"
+        app:ltbToggleUncheckedColor="@android:color/white"
+        app:ltbDuration="300"
          />
 
 </android.support.constraint.ConstraintLayout>

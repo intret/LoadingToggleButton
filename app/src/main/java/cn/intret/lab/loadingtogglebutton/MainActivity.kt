@@ -2,6 +2,7 @@ package cn.intret.lab.loadingtogglebutton
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ToggleButton
 
 class MainActivity : AppCompatActivity() {
 
