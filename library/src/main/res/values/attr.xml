@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="LoadingToggleButton">
-        <attr name="ltbTogglePadding" format="dimension|reference"/>
-        <attr name="ltbToggleRadius" format="dimension|reference"/>
         <attr name="ltbBackgroundRadius" format="dimension|reference"/>
-        <attr name="ltbToggleUncheckedColor" format="color|reference"/>
-        <attr name="ltbToggleCheckedColor" format="color|reference"/>
         <attr name="ltbBackgroundUncheckedColor" format="color|reference"/>
         <attr name="ltbBackgroundCheckedColor" format="color|reference"/>
+
+        <attr name="ltbTogglePadding" format="dimension|reference"/>
+        <attr name="ltbToggleRadius" format="dimension|reference"/>
+        <attr name="ltbToggleUncheckedColor" format="color|reference"/>
+        <attr name="ltbToggleCheckedColor" format="color|reference"/>
         <attr name="ltbToggleWithAnimate" format="boolean"/>
+
+        <attr name="ltbToggleIndicatorRadius" format="dimension|reference"/>
+        <attr name="ltbToggleIndicatorWidth" format="dimension|reference"/>
+        <attr name="ltbToggleIndicatorHeight" format="dimension|reference"/>
+        <attr name="ltbToggleIndicatorVisibility" format="string">
+            <enum name="hide" value="0"/>
+            <enum name="show" value="1"/>
+        </attr>
+
         <attr name="ltbChecked" format="boolean"/>
         <attr name="ltbDuration" format="integer"/>
     </declare-styleable>

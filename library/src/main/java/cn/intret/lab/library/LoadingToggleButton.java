@@ -12,17 +12,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.drawable.Animatable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Checkable;
+
+import java.util.ArrayList;
 
 
 /**
  * Created by intret on 18/3/23.
  */
 
-public class LoadingToggleButton extends View implements Checkable {
+public class LoadingToggleButton extends View implements Checkable, Animatable {
     private static final String TAG = LoadingToggleButton.class.getSimpleName();
 
     private Paint mDebugPaint;
@@ -35,6 +39,7 @@ public class LoadingToggleButton extends View implements Checkable {
 
     private float mAnimatedToggleX;
     private RectF mDrawingToggleRect = new RectF();
+    private RectF mDrawingToggleIndRect = new RectF();
 
     private float mCenterDistance;
     private ValueAnimator mToggleAnimator;
@@ -60,11 +65,12 @@ public class LoadingToggleButton extends View implements Checkable {
     private int mHeight;
 
 
-
     private int mRightIndicatorX;
     private int mRightIndicatorY;
     private int mToggleWidth;
     private int mToggleHeight;
+    private boolean mHasAnimators;
+    private ArrayList<ValueAnimator> mAnimators;
 
     public LoadingToggleButton(Context context) {
         super(context);
@@ -81,8 +87,13 @@ public class LoadingToggleButton extends View implements Checkable {
         init(attrs);
     }
 
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
     private void init(AttributeSet attrs) {
-        ToggleSettings toggleSettings = new ToggleSettings.Builder().buildSettings();
+
         setClickable(true);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -101,37 +112,44 @@ public class LoadingToggleButton extends View implements Checkable {
         pathMoon = new Path();
         pathBg = new Path();
 
+        readAttrs(attrs);
+    }
+
+    private void readAttrs(AttributeSet attrs) {
+        ToggleSettings settings = new ToggleSettings.Builder().buildSettings();
         if (attrs != null) {
 
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.LoadingToggleButton);
 
             mChecked = typedArray.getBoolean(R.styleable.LoadingToggleButton_ltbChecked, false);
 
-            int toggleUnchecked = typedArray.getColor(R.styleable.LoadingToggleButton_ltbToggleUncheckedColor, ToggleSettings.TOGGLE_UNCHECKED_COLOR);
-            int toggleChecked = typedArray.getColor(R.styleable.LoadingToggleButton_ltbToggleCheckedColor, ToggleSettings.TOGGLE_CHECKED_COLOR);
-            int backgroundUnCheckColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbBackgroundUncheckedColor, ToggleSettings.BACKGROUND_UNCHECKED_COLOR);
-            int backgroundCheckColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbBackgroundCheckedColor, ToggleSettings.BACKGROUND_CHECKED_COLOR);
+            // background
+            settings.mBackgroundCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbBackgroundCheckedColor, ToggleSettings.BACKGROUND_CHECKED_COLOR);
+            settings.mBackgroundUnCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbBackgroundUncheckedColor, ToggleSettings.BACKGROUND_UNCHECKED_COLOR);
+            settings.mBgRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbBackgroundRadius, ToggleSettings.RADIUS_DEFAULT);
 
-            int bgRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbBackgroundRadius, ToggleSettings.RADIUS_DEFAULT);
+            // toggle color
+            settings.mToggleUnCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbToggleUncheckedColor, ToggleSettings.TOGGLE_UNCHECKED_COLOR);
+            settings.mToggleCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbToggleCheckedColor, ToggleSettings.TOGGLE_CHECKED_COLOR);
 
-            int padding = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbTogglePadding, ToggleSettings.PADDING_DEFAULT);
-            int toggleRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleRadius, ToggleSettings.RADIUS_DEFAULT);
-            int duration = typedArray.getInt(R.styleable.LoadingToggleButton_ltbDuration, ToggleSettings.DURATION_DEFAULT);
+            // toggle size
+            settings.mToggleRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleRadius, dpToPx(ToggleSettings.RADIUS_DEFAULT));
+            settings.mPadding = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbTogglePadding, dpToPx(ToggleSettings.PADDING_DEFAULT));
+
+            // toggle behaviors
             boolean withAnimator = typedArray.getBoolean(R.styleable.LoadingToggleButton_ltbToggleWithAnimate, true);
-            toggleSettings = new ToggleSettings.Builder()
-                    .setToggleUnCheckedColor(toggleUnchecked)
-                    .setToggleCheckedColor(toggleChecked)
-                    .setBackgroundUncheckedColor(backgroundUnCheckColor)
-                    .setBackgroundCheckedColor(backgroundCheckColor)
-                    .setPadding(padding)
-                    .setDuration(duration)
-                    .setToggleRadius(toggleRadius)
-                    .setBgRadius(bgRadius)
-                    .withAnimator(withAnimator)
-                    .buildSettings();
+            int duration = typedArray.getInt(R.styleable.LoadingToggleButton_ltbDuration, ToggleSettings.DURATION_DEFAULT);
+            settings.mDuration = !withAnimator ? 1 : duration;
+
+            // toggle indicator
+            settings.toggleIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleIndicatorHeight, dpToPx(ToggleSettings.DEFAULT_TOGGLE_INDICATOR_HEIGHT));
+            settings.toggleIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleIndicatorWidth, dpToPx(ToggleSettings.DEFAULT_TOGGLE_INDICATOR_WIDTH));
+            settings.toggleIndicatorRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleIndicatorRadius, dpToPx(ToggleSettings.DEFAULT_TOGGLE_INDICATOR_RADIUS));
+            settings.toggleIndicatorVisibility = typedArray.getInt(R.styleable.LoadingToggleButton_ltbToggleIndicatorVisibility, ToggleSettings.DEFAULT_INDICATOR_VISIBLE);
+
             typedArray.recycle();
         }
-        setToggleSettings(toggleSettings);
+        setToggleSettings(settings);
     }
 
     @Override
@@ -155,11 +173,11 @@ public class LoadingToggleButton extends View implements Checkable {
         final int maxToggleRadius = mToggleHeight / 2;
 
         mBgRadius = (mToggleSettings.mBgRadius > maxBgRadius) ? maxBgRadius
-                : (mToggleSettings.mBgRadius < 0 ? (mToggleSettings.mBgRadius == -1 ? maxBgRadius : 0 ) : mToggleSettings.mBgRadius);
+                : (mToggleSettings.mBgRadius < 0 ? maxBgRadius : mToggleSettings.mBgRadius);
 
         // TODO check negative?
         mToggleRadius = mToggleSettings.mToggleRadius > maxToggleRadius ? maxToggleRadius
-                : (mToggleSettings.mToggleRadius < 0 ? (mToggleSettings.mToggleRadius == -1 ? maxToggleRadius : 0) : mToggleSettings.mToggleRadius);
+                : (mToggleSettings.mToggleRadius < 0 ? maxToggleRadius : mToggleSettings.mToggleRadius);
 
         // Two fixed position of toggle's outline, the toggle will animated between these two position
         mFixedRightToggleOutline.right = mWidth - mToggleSettings.mPadding;
@@ -312,6 +330,21 @@ public class LoadingToggleButton extends View implements Checkable {
         return super.performClick();
     }
 
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
+
     public interface OnCheckedChangeListener {
         void onCheckedChanged(View buttonView, boolean isChecked);
     }
@@ -336,6 +369,11 @@ public class LoadingToggleButton extends View implements Checkable {
 
         drawBackground(canvas);
         drawToggle(canvas);
+
+        if (mToggleSettings.toggleIndicatorVisibility == ToggleSettings.INDICATOR_VISIBLE_SHOW) {
+            drawToggleIndicator(canvas);
+        }
+
         //drawSun(canvas);
 
         if (mShowAssistantLine) {
@@ -344,6 +382,16 @@ public class LoadingToggleButton extends View implements Checkable {
         }
     }
 
+    private void ensureAnimators() {
+        if (!mHasAnimators) {
+            mAnimators = createAnimators();
+            mHasAnimators = true;
+        }
+    }
+
+    public ArrayList<ValueAnimator> createAnimators() {
+        return new ArrayList<>();
+    }
 
     void drawToggle(Canvas canvas) {
         mDrawingToggleRect.set(mFixedLeftToggleOutline);
@@ -358,6 +406,28 @@ public class LoadingToggleButton extends View implements Checkable {
         if (mShowAssistantLine) {
             canvas.drawRect(mDrawingToggleRect, mDebugPaint);
         }
+
+
+    }
+
+    void getCenterRectOfRect(RectF containerRect, float width, float height, RectF outCenterRect) {
+        outCenterRect.left = containerRect.left + containerRect.width() / 2f - width / 2f;
+        outCenterRect.right = outCenterRect.left + width;
+
+        outCenterRect.top = containerRect.top + containerRect.height() / 2f - height / 2f;
+        outCenterRect.bottom = outCenterRect.top + height;
+    }
+
+    private void drawToggleIndicator(Canvas canvas) {
+
+        getCenterRectOfRect(mDrawingToggleRect,
+                mToggleSettings.toggleIndicatorWidth, mToggleSettings.toggleIndicatorHeight,
+                mDrawingToggleIndRect);
+
+        // TODO: add corresponding color attribute
+        mPaint.setColor(mBackgroundColor);
+
+        canvas.drawRoundRect(mDrawingToggleIndRect, mToggleSettings.toggleIndicatorRadius, mToggleSettings.toggleIndicatorRadius, mPaint);
     }
 
     void drawSun(Canvas canvas) {
@@ -383,7 +453,7 @@ public class LoadingToggleButton extends View implements Checkable {
 //        pathBg.addRect(mBgRadius, 0, getWidth() - mBgRadius, mBgRadius * 2, Path.Direction.CW);
 
         mBgRect.set(0, 0, mWidth, mHeight);
-        pathBg.addRoundRect(mBgRect, mBgRadius , mBgRadius , Path.Direction.CW);
+        pathBg.addRoundRect(mBgRect, mBgRadius, mBgRadius, Path.Direction.CW);
 
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mBackgroundColor);

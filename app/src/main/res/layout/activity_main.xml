@@ -70,8 +70,31 @@
         app:ltbChecked="true"
         app:ltbBackgroundCheckedColor="@android:color/holo_purple"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
+
         app:ltbToggleCheckedColor="@android:color/white"
         app:ltbToggleUncheckedColor="@android:color/white"
+        app:ltbToggleIndicatorVisibility="show"
+        app:ltbToggleIndicatorHeight="8dp"
+        app:ltbToggleIndicatorWidth="2dp"
+        app:ltbDuration="300"
+        />
+
+    <cn.intret.lab.library.LoadingToggleButton
+        android:id="@+id/toggle_round3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toggle_round2"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:ltbChecked="true"
+        app:ltbBackgroundCheckedColor="@android:color/holo_purple"
+        app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
+        app:ltbToggleIndicatorVisibility="show"
+        app:ltbToggleCheckedColor="@android:color/white"
+        app:ltbToggleUncheckedColor="@android:color/white"
+        app:ltbToggleIndicatorHeight="2dp"
+        app:ltbToggleIndicatorWidth="8dp"
         app:ltbDuration="300"
         />
 
