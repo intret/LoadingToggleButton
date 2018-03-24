@@ -29,11 +29,16 @@ import java.util.ArrayList;
 public class LoadingToggleButton extends View implements Checkable, Animatable {
     private static final String TAG = LoadingToggleButton.class.getSimpleName();
 
+    public interface OnCheckedChangeListener {
+        void onCheckedChanged(View buttonView, boolean isChecked);
+    }
+    private OnCheckedChangeListener mOnCheckedChangeListener;
+
     private Paint mDebugPaint;
     private boolean mShowAssistantLine = false;
 
     private final float SCALE = (float) (Math.sqrt(2) / 2);
-    private OnCheckedChangeListener mOnCheckedChangeListener;
+
     private boolean mChecked;
     private float mSunCenterX;
 
@@ -345,9 +350,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
         return false;
     }
 
-    public interface OnCheckedChangeListener {
-        void onCheckedChanged(View buttonView, boolean isChecked);
-    }
+
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
