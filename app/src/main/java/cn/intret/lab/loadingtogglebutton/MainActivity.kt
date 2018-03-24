@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
         toggle1.setOnCheckChangeListener { buttonView, isChecked -> log1.text = getCheckDesc(isChecked) }
         log1.setOnClickListener { toggle1.toggle() }
 
-        // toggle2
-
+        // toggle2 toggle3
+        toggle2.setOnCheckChangeListener { buttonView, isChecked -> toggle_round1.isChecked = isChecked }
     }
 
-    private fun getCheckDesc(isChecked: Boolean) : String =
+    private fun getCheckDesc(isChecked: Boolean): String =
             (if (isChecked) "It's checked ( click me! )" else "It's unchecked")
 }

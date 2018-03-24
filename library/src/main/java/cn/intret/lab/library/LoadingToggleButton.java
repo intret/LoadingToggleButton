@@ -32,6 +32,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     public interface OnCheckedChangeListener {
         void onCheckedChanged(View buttonView, boolean isChecked);
     }
+
     private OnCheckedChangeListener mOnCheckedChangeListener;
 
     private Paint mDebugPaint;
@@ -314,7 +315,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     }
 
     @Override
-    public void setChecked(boolean checked) {
+    public void setChecked(final boolean checked) {
         if (mIsAnimating) {
             return;
         }
@@ -349,7 +350,6 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     public boolean isRunning() {
         return false;
     }
-
 
 
     @Override

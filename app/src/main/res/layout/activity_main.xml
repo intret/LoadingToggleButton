@@ -59,7 +59,7 @@
         />
 
     <cn.intret.lab.library.LoadingToggleButton
-        android:id="@+id/toggle_round"
+        android:id="@+id/toggle_round1"
         android:layout_width="50dp"
         android:layout_height="25dp"
         android:layout_marginLeft="16dp"
@@ -68,6 +68,7 @@
         app:layout_constraintTop_toBottomOf="@id/toggle2"
         app:ltbBackgroundCheckedColor="@android:color/holo_purple"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
+        app:ltbToggleIndicatorVisibility="show"
         app:ltbChecked="false"
         app:ltbDuration="300"
         app:ltbToggleCheckedColor="@android:color/white"
@@ -81,18 +82,26 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toggle_round"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_round1"
         app:ltbBackgroundCheckedColor="@android:color/holo_purple"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
         app:ltbChecked="true"
-
-        app:ltbDuration="300"
+        app:ltbDuration="500"
         app:ltbToggleCheckedColor="@android:color/white"
         app:ltbToggleIndicatorHeight="8dp"
         app:ltbToggleIndicatorVisibility="show"
         app:ltbToggleIndicatorWidth="2dp"
         app:ltbToggleUncheckedColor="@android:color/white"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Slow animation + vertical toggle indicator"
+        app:layout_constraintBottom_toBottomOf="@+id/toggle_round2"
+        app:layout_constraintLeft_toRightOf="@+id/toggle_round2"
+        app:layout_constraintTop_toTopOf="@+id/toggle_round2"/>
 
     <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle_round3"
