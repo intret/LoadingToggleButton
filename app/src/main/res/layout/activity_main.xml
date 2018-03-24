@@ -16,11 +16,63 @@
         android:layout_width="50dp"
         android:layout_height="25dp"
         app:ltbChecked="true"
+        app:ltbBackgroundRadius="5dp"
+        app:ltbToggleRadius="4dp"
         app:ltbBackgroundCheckedColor="@color/colorAccent"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
         app:ltbToggleCheckedColor="@android:color/white"
         app:ltbToggleUncheckedColor="@android:color/white"
         app:ltbDuration="300"
          />
+
+    <cn.intret.lab.library.LoadingToggleButton
+        android:id="@+id/toggle2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toggle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:ltbChecked="false"
+        app:ltbBackgroundRadius="5dp"
+        app:ltbToggleRadius="4dp"
+        app:ltbBackgroundCheckedColor="@color/colorAccent"
+        app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
+        app:ltbToggleCheckedColor="@android:color/white"
+        app:ltbToggleUncheckedColor="@android:color/white"
+        app:ltbDuration="300"
+        />
+
+    <cn.intret.lab.library.LoadingToggleButton
+        android:id="@+id/toggle_round"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toggle2"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:ltbChecked="false"
+        app:ltbBackgroundCheckedColor="@android:color/holo_purple"
+        app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
+        app:ltbToggleCheckedColor="@android:color/white"
+        app:ltbToggleUncheckedColor="@android:color/white"
+        app:ltbDuration="300"
+        />
+
+    <cn.intret.lab.library.LoadingToggleButton
+        android:id="@+id/toggle_round2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toggle_round"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:ltbChecked="true"
+        app:ltbBackgroundCheckedColor="@android:color/holo_purple"
+        app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
+        app:ltbToggleCheckedColor="@android:color/white"
+        app:ltbToggleUncheckedColor="@android:color/white"
+        app:ltbDuration="300"
+        />
 
 </android.support.constraint.ConstraintLayout>
