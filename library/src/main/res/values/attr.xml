@@ -14,9 +14,21 @@
         <attr name="ltbToggleIndicatorRadius" format="dimension|reference"/>
         <attr name="ltbToggleIndicatorWidth" format="dimension|reference"/>
         <attr name="ltbToggleIndicatorHeight" format="dimension|reference"/>
+
+        <attr name="ltbToggleLoadingAnimationType" format="string">
+            <enum name="flick" value="1"/>
+            <enum name="lineSpinner" value="2"/>
+            <enum name="dotSpinner" value="3"/>
+        </attr>
+
+        <attr name="ltbToggleIndicatorFlickWhen" format="string">
+            <flag name="toggleToOn" value="1"/>
+            <flag name="toggleToOff" value="2"/>
+        </attr>
         <attr name="ltbToggleIndicatorVisibility" format="string">
-            <enum name="hide" value="0"/>
-            <enum name="show" value="1"/>
+            <flag name="hide" value="0"/>
+            <flag name="show" value="1"/>
+            <flag name="flicker" value="2"/>
         </attr>
 
         <attr name="ltbChecked" format="boolean"/>

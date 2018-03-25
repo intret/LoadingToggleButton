@@ -12,14 +12,40 @@ import java.lang.annotation.RetentionPolicy;
 
 public class ToggleSettings {
 
+    /*
+     * Toggle indicator constants
+     */
     public static final int INDICATOR_VISIBLE_HIDE = 0;
     public static final int INDICATOR_VISIBLE_SHOW = 1;
-
+    public static final int INDICATOR_VISIBLE_FLICKER = 2;
 
     @IntDef({INDICATOR_VISIBLE_HIDE, INDICATOR_VISIBLE_SHOW})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface IndicatorVisible {
-    }
+    public @interface IndicatorVisible {}
+
+    /*
+     * Indicator animation time
+     */
+
+    public static final int INDICATOR_FLICK_WHEN_TOGGLE_TO_ON = 1;
+    public static final int INDICATOR_FLICK_WHEN_TOGGLE_TO_OFF = 2;
+
+    /*
+     * Loading animation
+     */
+
+    public static final int LOADING_ANIMATION_FLICK = 1;
+    public static final int LOADING_ANIMATION_LINE_SPINNER = 2;
+    public static final int LOADING_ANIMATION_DOT_SPINNER = 3;
+    @IntDef({LOADING_ANIMATION_FLICK, LOADING_ANIMATION_DOT_SPINNER, LOADING_ANIMATION_LINE_SPINNER})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface AnimationType {}
+
+    /* ---------------------------------------------------------------------------------------------
+     * Constants
+     * ---------------------------------------------------------------------------------------------
+     */
+
 
     public static final int BACKGROUND_UNCHECKED_COLOR = Color.parseColor("#7c4dff");
     public static final int BACKGROUND_CHECKED_COLOR = Color.parseColor("#424242");
@@ -34,6 +60,13 @@ public class ToggleSettings {
 
     public static final int DEFAULT_INDICATOR_VISIBLE = INDICATOR_VISIBLE_HIDE;
 
+
+    /* ---------------------------------------------------------------------------------------------
+     * Setting
+     * ---------------------------------------------------------------------------------------------
+     */
+
+
     public int mBgRadius;
     public int mBackgroundUnCheckedColor;
     public int mBackgroundCheckedColor;
@@ -45,89 +78,26 @@ public class ToggleSettings {
     public int toggleIndicatorWidth;
     public int toggleIndicatorHeight;
     public int toggleIndicatorRadius;
+    public int toggleIndicatorNormalColor = TOGGLE_UNCHECKED_COLOR;
+    public int toggleIndicatorActiveColor = TOGGLE_CHECKED_COLOR;
+
+    @AnimationType
+    public int loadingAnimationType;
     public boolean showIndicator = true;
+
 
     @IndicatorVisible
     public int toggleIndicatorVisibility = INDICATOR_VISIBLE_HIDE;
+    public int toggleIndicatorFlickerWhen = INDICATOR_FLICK_WHEN_TOGGLE_TO_ON;
 
-    private ToggleSettings(Builder builder) {
-        this.mBackgroundUnCheckedColor = builder.backgroundUncheckedColor;
-        this.mBackgroundCheckedColor = builder.backgroundCheckedColor;
-        this.mToggleUnCheckedColor = builder.toggleUnCheckedColor;
-        this.mToggleCheckedColor = builder.toggleCheckedColor;
-        this.mPadding = builder.padding;
-        this.mDuration = builder.duration;
-        this.mDuration = !builder.withAnimator ? 1 : mDuration;
-        this.mToggleRadius = builder.mToggleRadius;
-        this.mBgRadius = builder.mBgRadius;
-    }
-
-    public static class Builder {
-        int backgroundUncheckedColor = BACKGROUND_UNCHECKED_COLOR;
-        int backgroundCheckedColor = BACKGROUND_CHECKED_COLOR;
-        int toggleUnCheckedColor = TOGGLE_UNCHECKED_COLOR;
-        int toggleCheckedColor = TOGGLE_CHECKED_COLOR;
-        int padding = PADDING_DEFAULT;
-        int duration = DURATION_DEFAULT;
-        boolean withAnimator = true;
-        int mToggleRadius;
-        int mBgRadius;
-
-        public Builder setBackgroundUncheckedColor(int backgroundUncheckedColor) {
-            this.backgroundUncheckedColor = backgroundUncheckedColor;
-            return this;
-        }
-
-        public Builder setBackgroundCheckedColor(int backgroundCheckedColor) {
-            this.backgroundCheckedColor = backgroundCheckedColor;
-            return this;
-        }
-
-        public Builder setToggleUnCheckedColor(int toggleUnCheckedColor) {
-            this.toggleUnCheckedColor = toggleUnCheckedColor;
-            return this;
-        }
-
-        public Builder setToggleCheckedColor(int toggleCheckedColor) {
-            this.toggleCheckedColor = toggleCheckedColor;
-            return this;
-        }
-
-        public Builder setDuration(int duration) {
-            this.duration = duration;
-            return this;
-        }
-
-        public Builder withAnimator(boolean withAnimator) {
-            this.withAnimator = withAnimator;
-            return this;
-        }
-
-        public Builder setPadding(int padding) {
-            this.padding = padding;
-            return this;
-        }
-
-        public ToggleSettings buildSettings() {
-            return new ToggleSettings(this);
-        }
-
-        public Builder setToggleRadius(int radius) {
-            mToggleRadius = radius;
-            return this;
-        }
-
-        public int getToggleRadius() {
-            return mToggleRadius;
-        }
-
-        public Builder setBgRadius(int bgRadius) {
-            mBgRadius = bgRadius;
-            return this;
-        }
-
-        public int getBgRadius() {
-            return mBgRadius;
-        }
+    ToggleSettings() {
+        this.mBackgroundUnCheckedColor = BACKGROUND_UNCHECKED_COLOR;
+        this.mBackgroundCheckedColor = BACKGROUND_CHECKED_COLOR;
+        this.mToggleUnCheckedColor = TOGGLE_UNCHECKED_COLOR;
+        this.mToggleCheckedColor = TOGGLE_CHECKED_COLOR;
+        this.mPadding = PADDING_DEFAULT;
+        this.mDuration = DURATION_DEFAULT;
+//        this.mToggleRadius = ;
+//        this.mBgRadius;
     }
 }
