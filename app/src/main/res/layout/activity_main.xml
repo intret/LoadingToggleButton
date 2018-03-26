@@ -9,7 +9,7 @@
 
     <!--toggle1-->
     <cn.intret.lab.library.LoadingToggleButton
-        android:id="@+id/toggle1"
+        android:id="@+id/toggle_rect1"
         android:layout_width="50dp"
         android:layout_height="25dp"
         android:layout_marginLeft="16dp"
@@ -36,20 +36,20 @@
         android:gravity="center_vertical"
         android:padding="5dp"
         android:textColor="@android:color/holo_green_light"
-        app:layout_constraintBottom_toBottomOf="@+id/toggle1"
-        app:layout_constraintLeft_toRightOf="@+id/toggle1"
-        app:layout_constraintTop_toTopOf="@+id/toggle1"
+        app:layout_constraintBottom_toBottomOf="@+id/toggle_rect1"
+        app:layout_constraintLeft_toRightOf="@+id/toggle_rect1"
+        app:layout_constraintTop_toTopOf="@+id/toggle_rect1"
         tools:text="it's on"/>
 
     <!--toggle2-->
     <cn.intret.lab.library.LoadingToggleButton
-        android:id="@+id/toggle2"
+        android:id="@+id/toggle_rect2"
         android:layout_width="50dp"
         android:layout_height="25dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggle1"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_rect1"
 
         app:ltbBackgroundCheckedColor="@color/colorAccent"
         app:ltbBackgroundRadius="5dp"
@@ -68,7 +68,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toggle2"
+        app:layout_constraintTop_toBottomOf="@id/toggle_rect2"
         app:ltbBackgroundCheckedColor="@android:color/holo_purple"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
         app:ltbChecked="false"
@@ -106,9 +106,9 @@
         app:layout_constraintLeft_toRightOf="@+id/toggle_round2"
         app:layout_constraintTop_toTopOf="@+id/toggle_round2"/>
 
-    <!--toggle 3-->
+    <!--toggle flicking-->
     <cn.intret.lab.library.LoadingToggleButton
-        android:id="@+id/toggle_round3"
+        android:id="@+id/toggle_flicking"
         android:layout_width="50dp"
         android:layout_height="25dp"
         android:layout_marginLeft="16dp"
@@ -121,37 +121,38 @@
         app:ltbDuration="300"
         app:ltbToggleCheckedColor="@android:color/white"
         app:ltbToggleIndicatorFlickWhen="toggleToOn"
-        app:ltbToggleLoadingAnimationType="flick"
         app:ltbToggleIndicatorHeight="2dp"
         app:ltbToggleIndicatorVisibility="show"
         app:ltbToggleIndicatorWidth="8dp"
+        app:ltbToggleLoadingAnimationType="flick"
         app:ltbToggleUncheckedColor="@android:color/white"
         />
 
     <TextView
+        android:id="@+id/tv_flicking_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="Indicator Flicking"
-        app:layout_constraintLeft_toRightOf="@+id/toggle_round3"
-        app:layout_constraintTop_toTopOf="@+id/toggle_round3"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/toggle_flicking"
+        app:layout_constraintLeft_toRightOf="@+id/toggle_flicking"
+        app:layout_constraintTop_toTopOf="@+id/toggle_flicking"
         />
 
     <!--Stop flicking-->
     <TextView
         android:id="@+id/btn_stop_flick"
+        style="@style/TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:background="?attr/selectableItemBackground"
         android:padding="5dp"
         android:text="STOP FLICK"
-        android:textColor="@android:color/holo_green_light"
-        app:layout_constraintBottom_toBottomOf="@+id/toggle_round3"
+        app:layout_constraintBottom_toBottomOf="@+id/toggle_flicking"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toggle_round3"
-        />
+        app:layout_constraintTop_toTopOf="@+id/toggle_flicking"/>
 
+    <!--loading toggle - line spinner-->
     <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle_line_spinner"
         android:layout_width="50dp"
@@ -159,18 +160,40 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toggle_round3"
+        app:layout_constraintTop_toBottomOf="@id/toggle_flicking"
         app:ltbBackgroundCheckedColor="@android:color/holo_purple"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
-        app:ltbChecked="true"
+        app:ltbChecked="false"
         app:ltbDuration="300"
         app:ltbToggleCheckedColor="@android:color/white"
         app:ltbToggleIndicatorFlickWhen="toggleToOn"
-        app:ltbToggleLoadingAnimationType="lineSpinner"
         app:ltbToggleIndicatorHeight="2dp"
         app:ltbToggleIndicatorVisibility="show"
         app:ltbToggleIndicatorWidth="8dp"
+        app:ltbToggleLoadingAnimationType="lineSpinner"
         app:ltbToggleUncheckedColor="@android:color/white"
         />
+
+    <TextView
+        android:id="@+id/tv_loading_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Indicator Loading Animation"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/toggle_line_spinner"
+        app:layout_constraintLeft_toRightOf="@+id/toggle_line_spinner"
+        app:layout_constraintTop_toTopOf="@+id/toggle_line_spinner"
+        />
+
+    <TextView
+        android:id="@+id/btn_stop_loading"
+        style="@style/TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="STOP LOADING"
+        app:layout_constraintBottom_toBottomOf="@+id/toggle_line_spinner"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toggle_line_spinner"/>
 
 </android.support.constraint.ConstraintLayout>

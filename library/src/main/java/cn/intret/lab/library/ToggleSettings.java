@@ -13,7 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 public class ToggleSettings {
 
     /*
-     * Toggle indicator constants
+     * Toggle indicator visibility constants
      */
     public static final int INDICATOR_VISIBLE_HIDE = 0;
     public static final int INDICATOR_VISIBLE_SHOW = 1;
@@ -27,17 +27,24 @@ public class ToggleSettings {
      * Indicator animation time
      */
 
-    public static final int INDICATOR_FLICK_WHEN_TOGGLE_TO_ON = 1;
-    public static final int INDICATOR_FLICK_WHEN_TOGGLE_TO_OFF = 2;
+    public static final int SHOW_INDICATOR_WHEN_TOGGLE_TO_ON = 1;
+    public static final int SHOW_INDICATOR_WHEN_TOGGLE_TO_OFF = 2;
 
     /*
      * Loading animation
      */
 
+    public static final int LOADING_ANIMATION_NONE = 0;
     public static final int LOADING_ANIMATION_FLICK = 1;
     public static final int LOADING_ANIMATION_LINE_SPINNER = 2;
     public static final int LOADING_ANIMATION_DOT_SPINNER = 3;
-    @IntDef({LOADING_ANIMATION_FLICK, LOADING_ANIMATION_DOT_SPINNER, LOADING_ANIMATION_LINE_SPINNER})
+
+    @IntDef({
+            LOADING_ANIMATION_NONE,
+            LOADING_ANIMATION_FLICK,
+            LOADING_ANIMATION_DOT_SPINNER,
+            LOADING_ANIMATION_LINE_SPINNER
+    })
     @Retention(RetentionPolicy.SOURCE)
     public @interface AnimationType {}
 
@@ -83,12 +90,11 @@ public class ToggleSettings {
 
     @AnimationType
     public int loadingAnimationType;
-    public boolean showIndicator = true;
 
 
     @IndicatorVisible
     public int toggleIndicatorVisibility = INDICATOR_VISIBLE_HIDE;
-    public int toggleIndicatorFlickerWhen = INDICATOR_FLICK_WHEN_TOGGLE_TO_ON;
+    public int showIndicatorWhen = SHOW_INDICATOR_WHEN_TOGGLE_TO_ON;
 
     ToggleSettings() {
         this.mBackgroundUnCheckedColor = BACKGROUND_UNCHECKED_COLOR;

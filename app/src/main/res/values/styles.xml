@@ -10,4 +10,10 @@
         <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
+    <style name="TextButton">
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textColor">@android:color/holo_green_light</item>
+    </style>
+
 </resources>

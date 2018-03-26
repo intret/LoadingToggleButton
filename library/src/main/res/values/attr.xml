@@ -16,6 +16,7 @@
         <attr name="ltbToggleIndicatorHeight" format="dimension|reference"/>
 
         <attr name="ltbToggleLoadingAnimationType" format="string">
+            <enum name="none" value="0"/>
             <enum name="flick" value="1"/>
             <enum name="lineSpinner" value="2"/>
             <enum name="dotSpinner" value="3"/>
