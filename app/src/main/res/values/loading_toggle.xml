@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <!--Rectangle Toggle-->
+    <style name="RectangleToggle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="ltbBackgroundRadius">1dp</item>
+        <item name="ltbToggleRadius">1dp</item>
+    </style>
+
+    <style name="RectangleToggle.StaticIndicator">
+        <item name="ltbIndicatorVisibility">show</item>
+        <item name="ltbIndicatorAnimationType">none</item>
+        <item name="ltbIndicatorHeight">10dp</item>
+        <item name="ltbIndicatorRadius">1dp</item>
+        <item name="ltbIndicatorWidth">2dp</item>
+    </style>
+
+    <style name="RectangleToggle.StaticIndicator.Black">
+        <item name="ltbBackgroundCheckedColor">@android:color/black</item>
+    </style>
+
+    <style name="RectangleToggle.Black">
+        <item name="ltbBackgroundCheckedColor">@android:color/black</item>
+    </style>
+
+    <style name="RoundToggle.Black">
+        <item name="ltbBackgroundCheckedColor">@android:color/black</item>
+    </style>
+
+    <style name="RoundToggle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="ltbBackgroundRadius">11dp</item>
+        <item name="ltbToggleRadius">10dp</item>
+    </style>
+
+
+</resources>

@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="LoadingToggleButton">
+
+        <!--Background -->
         <attr name="ltbBackgroundRadius" format="dimension|reference"/>
         <attr name="ltbBackgroundUncheckedColor" format="color|reference"/>
         <attr name="ltbBackgroundCheckedColor" format="color|reference"/>
 
+        <!--Toggle size-->
         <attr name="ltbTogglePadding" format="dimension|reference"/>
         <attr name="ltbToggleRadius" format="dimension|reference"/>
+
+        <!--Toggle color-->
         <attr name="ltbToggleUncheckedColor" format="color|reference"/>
         <attr name="ltbToggleCheckedColor" format="color|reference"/>
+
+        <!--Toggle animation-->
         <attr name="ltbToggleWithAnimate" format="boolean"/>
+        <attr name="ltbToggleDuration" format="integer"/>
 
-        <attr name="ltbToggleIndicatorRadius" format="dimension|reference"/>
-        <attr name="ltbToggleIndicatorWidth" format="dimension|reference"/>
-        <attr name="ltbToggleIndicatorHeight" format="dimension|reference"/>
+        <!--Toggle status-->
+        <attr name="ltbToggleChecked" format="boolean"/>
 
-        <attr name="ltbToggleLoadingAnimationType" format="string">
+        <!--Indicator size-->
+        <attr name="ltbIndicatorRadius" format="dimension|reference"/>
+        <attr name="ltbIndicatorWidth" format="dimension|reference"/>
+        <attr name="ltbIndicatorHeight" format="dimension|reference"/>
+
+        <!--Indicator appearance-->
+        <attr name="ltbIndicatorColor" format="color|reference"/>
+
+        <!--Indicator visibility-->
+        <attr name="ltbIndicatorVisibility" format="string">
+            <flag name="hide" value="0"/>
+            <flag name="show" value="1"/>
+        </attr>
+
+        <!--Indicator Animation Type-->
+        <attr name="ltbIndicatorAnimationType" format="string">
             <enum name="none" value="0"/>
             <enum name="flick" value="1"/>
             <enum name="lineSpinner" value="2"/>
             <enum name="dotSpinner" value="3"/>
         </attr>
 
-        <attr name="ltbToggleIndicatorFlickWhen" format="string">
+        <!--When to start indicator animation when 'ltbIndicatorAnimationType' attribute is 'flick'-->
+        <attr name="ltbIndicatorAnimatingWhen" format="string">
             <flag name="toggleToOn" value="1"/>
             <flag name="toggleToOff" value="2"/>
         </attr>
-        <attr name="ltbToggleIndicatorVisibility" format="string">
-            <flag name="hide" value="0"/>
-            <flag name="show" value="1"/>
-            <flag name="flicker" value="2"/>
-        </attr>
 
-        <attr name="ltbChecked" format="boolean"/>
-        <attr name="ltbDuration" format="integer"/>
     </declare-styleable>
 </resources>

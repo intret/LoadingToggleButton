@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         toggle_rect1.setOnCheckChangeListener { buttonView, isChecked -> log1.text = getCheckDesc(isChecked) }
         log1.setOnClickListener { toggle_rect1.toggle() }
 
-        // toggle2 toggle3 will synchronized the state
+
         toggle_rect2.setOnCheckChangeListener { buttonView, isChecked -> toggle_round1.isChecked = isChecked }
 
         // ------------------------------------------------
@@ -92,8 +92,8 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun updateLoadingTextButton(toggle_line_spinner: LoadingToggleButton, textView: TextView) {
         when {
-            !toggle_line_spinner.isRunning -> textView.text = "START LOADING"
-            else -> textView.text = "STOP LOADING"
+            !toggle_line_spinner.isRunning -> textView.text = "START"
+            else -> textView.text = "STOP"
         }
     }
 

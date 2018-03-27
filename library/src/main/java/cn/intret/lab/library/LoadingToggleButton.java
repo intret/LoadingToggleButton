@@ -27,11 +27,15 @@ import java.util.List;
 
 
 /**
- * A toggle button.
+ * A loading toggle button with loading animation.
  */
 public class LoadingToggleButton extends View implements Checkable, Animatable {
 
     private static final String TAG = LoadingToggleButton.class.getSimpleName();
+
+    private static final int DEFAULT_WIDTH = 44; // in dp
+    private static final int DEFAULT_HEIGHT = 22; // in dp
+
     private long mStartAnimationTime;
     private boolean mShowLoading = false;
 
@@ -68,7 +72,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     /*
      * Configurations from XML attributes
      */
-    private ToggleSettings mToggleSettings;
+    private ToggleConfiguration mToggleConfiguration;
 
     /*
      * Toggle size position
@@ -146,15 +150,15 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
      * ---------------------------------------------------------------------------------------------
      */
 
-    public void setToggleSettings(ToggleSettings toggleSettings) {
-        this.mToggleSettings = toggleSettings;
+    public void setToggleConfiguration(ToggleConfiguration toggleConfiguration) {
+        this.mToggleConfiguration = toggleConfiguration;
 
         if (mChecked) {
-            mToggleColor = mToggleSettings.mToggleCheckedColor;
-            mBackgroundColor = mToggleSettings.mBackgroundCheckedColor;
+            mToggleColor = mToggleConfiguration.mToggleCheckedColor;
+            mBackgroundColor = mToggleConfiguration.mBackgroundCheckedColor;
         } else {
-            mToggleColor = mToggleSettings.mToggleUnCheckedColor;
-            mBackgroundColor = mToggleSettings.mBackgroundUnCheckedColor;
+            mToggleColor = mToggleConfiguration.mToggleUnCheckedColor;
+            mBackgroundColor = mToggleConfiguration.mBackgroundUnCheckedColor;
         }
     }
 
@@ -168,8 +172,8 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
         return this;
     }
 
-    public ToggleSettings getToggleSettings() {
-        return mToggleSettings;
+    public ToggleConfiguration getToggleConfiguration() {
+        return mToggleConfiguration;
     }
 
     /* ---------------------------------------------------------------------------------------------
@@ -218,75 +222,75 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     }
 
     private void postInit() {
-        mIndicatorColor = mToggleSettings.mBackgroundCheckedColor;
+        mIndicatorColor = mToggleConfiguration.mBackgroundCheckedColor;
     }
 
     private void readAttrs(AttributeSet attrs) {
-        ToggleSettings settings = new ToggleSettings();
+        ToggleConfiguration settings = new ToggleConfiguration();
         if (attrs != null) {
 
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.LoadingToggleButton);
 
-            mChecked = typedArray.getBoolean(R.styleable.LoadingToggleButton_ltbChecked, false);
+            mChecked = typedArray.getBoolean(R.styleable.LoadingToggleButton_ltbToggleChecked, false);
 
             // background
-            settings.mBackgroundCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbBackgroundCheckedColor, ToggleSettings.BACKGROUND_CHECKED_COLOR);
-            settings.mBackgroundUnCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbBackgroundUncheckedColor, ToggleSettings.BACKGROUND_UNCHECKED_COLOR);
-            settings.mBgRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbBackgroundRadius, ToggleSettings.RADIUS_DEFAULT);
+            settings.mBackgroundCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbBackgroundCheckedColor, ToggleConfiguration.BACKGROUND_CHECKED_COLOR);
+            settings.mBackgroundUnCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbBackgroundUncheckedColor, ToggleConfiguration.BACKGROUND_UNCHECKED_COLOR);
+            settings.mBgRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbBackgroundRadius, ToggleConfiguration.RADIUS_DEFAULT);
 
             // toggle color
-            settings.mToggleUnCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbToggleUncheckedColor, ToggleSettings.TOGGLE_UNCHECKED_COLOR);
-            settings.mToggleCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbToggleCheckedColor, ToggleSettings.TOGGLE_CHECKED_COLOR);
+            settings.mToggleUnCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbToggleUncheckedColor, ToggleConfiguration.TOGGLE_UNCHECKED_COLOR);
+            settings.mToggleCheckedColor = typedArray.getColor(R.styleable.LoadingToggleButton_ltbToggleCheckedColor, ToggleConfiguration.TOGGLE_CHECKED_COLOR);
 
             // toggle size
-            settings.mToggleRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleRadius, dpToPx(ToggleSettings.RADIUS_DEFAULT));
-            settings.mPadding = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbTogglePadding, dpToPx(ToggleSettings.PADDING_DEFAULT));
+            settings.mToggleRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleRadius, dpToPx(ToggleConfiguration.RADIUS_DEFAULT));
+            settings.mPadding = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbTogglePadding, dpToPx(ToggleConfiguration.PADDING_DEFAULT));
 
             // toggle behaviors
             boolean withAnimator = typedArray.getBoolean(R.styleable.LoadingToggleButton_ltbToggleWithAnimate, true);
-            int duration = typedArray.getInt(R.styleable.LoadingToggleButton_ltbDuration, ToggleSettings.DURATION_DEFAULT);
+            int duration = typedArray.getInt(R.styleable.LoadingToggleButton_ltbToggleDuration, ToggleConfiguration.DURATION_DEFAULT);
             settings.mDuration = !withAnimator ? 1 : duration;
 
             // toggle indicator
-            settings.toggleIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleIndicatorHeight, dpToPx(ToggleSettings.DEFAULT_TOGGLE_INDICATOR_HEIGHT));
-            settings.toggleIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleIndicatorWidth, dpToPx(ToggleSettings.DEFAULT_TOGGLE_INDICATOR_WIDTH));
-            settings.toggleIndicatorRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbToggleIndicatorRadius, dpToPx(ToggleSettings.DEFAULT_TOGGLE_INDICATOR_RADIUS));
-            settings.toggleIndicatorVisibility = typedArray.getInt(R.styleable.LoadingToggleButton_ltbToggleIndicatorVisibility, ToggleSettings.DEFAULT_INDICATOR_VISIBLE);
+            settings.toggleIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbIndicatorHeight, dpToPx(ToggleConfiguration.DEFAULT_TOGGLE_INDICATOR_HEIGHT));
+            settings.toggleIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbIndicatorWidth, dpToPx(ToggleConfiguration.DEFAULT_TOGGLE_INDICATOR_WIDTH));
+            settings.toggleIndicatorRadius = typedArray.getDimensionPixelSize(R.styleable.LoadingToggleButton_ltbIndicatorRadius, dpToPx(ToggleConfiguration.DEFAULT_TOGGLE_INDICATOR_RADIUS));
+            settings.indicatorVisibility = typedArray.getInt(R.styleable.LoadingToggleButton_ltbIndicatorVisibility, ToggleConfiguration.DEFAULT_INDICATOR_VISIBLE);
 
-            settings.showIndicatorWhen = typedArray.getInt(R.styleable.LoadingToggleButton_ltbToggleIndicatorFlickWhen, ToggleSettings.SHOW_INDICATOR_WHEN_TOGGLE_TO_ON);
+            settings.showIndicatorWhen = typedArray.getInt(R.styleable.LoadingToggleButton_ltbIndicatorAnimatingWhen, ToggleConfiguration.SHOW_INDICATOR_WHEN_TOGGLE_TO_ON);
 
-            settings.loadingAnimationType = typedArray.getInt(R.styleable.LoadingToggleButton_ltbToggleLoadingAnimationType, ToggleSettings.LOADING_ANIMATION_FLICK);
+            settings.loadingAnimationType = typedArray.getInt(R.styleable.LoadingToggleButton_ltbIndicatorAnimationType, ToggleConfiguration.LOADING_ANIMATION_FLICK);
 
             typedArray.recycle();
         }
-        setToggleSettings(settings);
+        setToggleConfiguration(settings);
     }
 
     private void setUp() {
 
         // toggle size, it may be a long toggle, a circle toggle
-        mToggleHeight = mHeight - 2 * mToggleSettings.mPadding;
+        mToggleHeight = mHeight - 2 * mToggleConfiguration.mPadding;
         mToggleWidth = mToggleHeight;
 
         final int maxBgRadius = mHeight / 2;
         final int maxToggleRadius = mToggleHeight / 2;
 
-        mBgRadius = (mToggleSettings.mBgRadius > maxBgRadius) ? maxBgRadius
-                : (mToggleSettings.mBgRadius < 0 ? maxBgRadius : mToggleSettings.mBgRadius);
+        mBgRadius = (mToggleConfiguration.mBgRadius > maxBgRadius) ? maxBgRadius
+                : (mToggleConfiguration.mBgRadius < 0 ? maxBgRadius : mToggleConfiguration.mBgRadius);
 
-        mToggleRadius = mToggleSettings.mToggleRadius > maxToggleRadius ? maxToggleRadius
-                : (mToggleSettings.mToggleRadius < 0 ? maxToggleRadius : mToggleSettings.mToggleRadius);
+        mToggleRadius = mToggleConfiguration.mToggleRadius > maxToggleRadius ? maxToggleRadius
+                : (mToggleConfiguration.mToggleRadius < 0 ? maxToggleRadius : mToggleConfiguration.mToggleRadius);
 
         // Two fixed position of toggle's outline, the toggle will animated between these two position
-        mFixedRightToggleOutline.right = mWidth - mToggleSettings.mPadding;
-        mFixedRightToggleOutline.top = mToggleSettings.mPadding;
+        mFixedRightToggleOutline.right = mWidth - mToggleConfiguration.mPadding;
+        mFixedRightToggleOutline.top = mToggleConfiguration.mPadding;
         mFixedRightToggleOutline.left = mFixedRightToggleOutline.right - mToggleWidth;
-        mFixedRightToggleOutline.bottom = mHeight - mToggleSettings.mPadding;
+        mFixedRightToggleOutline.bottom = mHeight - mToggleConfiguration.mPadding;
 
-        mFixedLeftToggleOutline.left = mToggleSettings.mPadding;
-        mFixedLeftToggleOutline.top = mToggleSettings.mPadding;
+        mFixedLeftToggleOutline.left = mToggleConfiguration.mPadding;
+        mFixedLeftToggleOutline.top = mToggleConfiguration.mPadding;
         mFixedLeftToggleOutline.right = mFixedLeftToggleOutline.left + mToggleWidth;
-        mFixedLeftToggleOutline.bottom = mHeight - mToggleSettings.mPadding;
+        mFixedLeftToggleOutline.bottom = mHeight - mToggleConfiguration.mPadding;
 
 
         mDrawingToggleRect.set(mChecked ? mFixedRightToggleOutline : mFixedLeftToggleOutline);
@@ -354,10 +358,10 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
             toggleEndX = mFixedRightToggleOutline.left;
 
 
-            bgStartColor = mToggleSettings.mBackgroundUnCheckedColor;
-            bgEndColor = mToggleSettings.mBackgroundCheckedColor;
-            toggleStartColor = mToggleSettings.mToggleUnCheckedColor;
-            toggleEndColor = mToggleSettings.mToggleCheckedColor;
+            bgStartColor = mToggleConfiguration.mBackgroundUnCheckedColor;
+            bgEndColor = mToggleConfiguration.mBackgroundCheckedColor;
+            toggleStartColor = mToggleConfiguration.mToggleUnCheckedColor;
+            toggleEndColor = mToggleConfiguration.mToggleCheckedColor;
         } else {
 
             // for DayNightToggle mode
@@ -371,10 +375,10 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
             toggleStartX = mFixedRightToggleOutline.left;
             toggleEndX = mFixedLeftToggleOutline.left;
 
-            bgStartColor = mToggleSettings.mBackgroundCheckedColor;
-            bgEndColor = mToggleSettings.mBackgroundUnCheckedColor;
-            toggleStartColor = mToggleSettings.mToggleCheckedColor;
-            toggleEndColor = mToggleSettings.mToggleUnCheckedColor;
+            bgStartColor = mToggleConfiguration.mBackgroundCheckedColor;
+            bgEndColor = mToggleConfiguration.mBackgroundUnCheckedColor;
+            toggleStartColor = mToggleConfiguration.mToggleCheckedColor;
+            toggleEndColor = mToggleConfiguration.mToggleUnCheckedColor;
         }
 
         mToggleAnimator = ValueAnimator.ofFloat(0, 1.0f);
@@ -403,16 +407,16 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
                 mIsToggleAnimating = false;
 
                 // toggle indicator flicker
-                if (mToggleSettings.loadingAnimationType != ToggleSettings.LOADING_ANIMATION_NONE) {
+                if (mToggleConfiguration.loadingAnimationType != ToggleConfiguration.LOADING_ANIMATION_NONE) {
                     if (toggleToOn) {
 
-                        if (containsFlag(mToggleSettings.showIndicatorWhen, ToggleSettings.SHOW_INDICATOR_WHEN_TOGGLE_TO_ON)) {
+                        if (containsFlag(mToggleConfiguration.showIndicatorWhen, ToggleConfiguration.SHOW_INDICATOR_WHEN_TOGGLE_TO_ON)) {
                             Log.d(TAG, "indicator flicking started when 'toggle to on' animation ended");
                             mShowLoading = true;
                             start();
                         }
                     } else {
-                        if (containsFlag(mToggleSettings.showIndicatorWhen, ToggleSettings.SHOW_INDICATOR_WHEN_TOGGLE_TO_OFF)) {
+                        if (containsFlag(mToggleConfiguration.showIndicatorWhen, ToggleConfiguration.SHOW_INDICATOR_WHEN_TOGGLE_TO_OFF)) {
                             Log.d(TAG, "indicator flicking started when 'toggle to off' animation ended");
                             mShowLoading = true;
                             start();
@@ -426,7 +430,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
                 }
             }
         });
-        mToggleAnimator.setDuration(mToggleSettings.mDuration);
+        mToggleAnimator.setDuration(mToggleConfiguration.mDuration);
         mToggleAnimator.start();
         mIsToggleAnimating = true;
     }
@@ -445,6 +449,11 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     @Override
     public void setChecked(final boolean checked) {
         if (mIsToggleAnimating) {
+            return;
+        }
+
+        if (checked == mChecked) {
+            Log.d(TAG, "Duplicated status, LoadingToggleButton is already " + (checked ? "checked" : "unchecked"));
             return;
         }
 
@@ -469,11 +478,11 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
         public void run() {
             if (mIsIndicatorAnimating) {
 
-                switch (mToggleSettings.loadingAnimationType) {
-                    case ToggleSettings.LOADING_ANIMATION_FLICK:
+                switch (mToggleConfiguration.loadingAnimationType) {
+                    case ToggleConfiguration.LOADING_ANIMATION_FLICK:
                         toggleIndicatorFlickingState();
                         break;
-                    case ToggleSettings.LOADING_ANIMATION_LINE_SPINNER:
+                    case ToggleConfiguration.LOADING_ANIMATION_LINE_SPINNER:
                         updateSpinnerProgress();
                         break;
                 }
@@ -492,7 +501,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
 
         private void toggleIndicatorFlickingState() {
             mIndicatorOn = !mIndicatorOn;
-            mIndicatorColor = mIndicatorOn ? mToggleSettings.mBackgroundCheckedColor : mToggleSettings.mBackgroundUnCheckedColor;
+            mIndicatorColor = mIndicatorOn ? mToggleConfiguration.mBackgroundCheckedColor : mToggleConfiguration.mBackgroundUnCheckedColor;
         }
     };
 
@@ -502,14 +511,14 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
             return;
         } else {
 
-            switch (mToggleSettings.loadingAnimationType) {
-                case ToggleSettings.LOADING_ANIMATION_FLICK:
+            switch (mToggleConfiguration.loadingAnimationType) {
+                case ToggleConfiguration.LOADING_ANIMATION_FLICK:
                     startFlickingAnimation();
                     break;
-                case ToggleSettings.LOADING_ANIMATION_LINE_SPINNER:
+                case ToggleConfiguration.LOADING_ANIMATION_LINE_SPINNER:
                     startLineSpinnerAnimation();
                     break;
-                case ToggleSettings.LOADING_ANIMATION_DOT_SPINNER:
+                case ToggleConfiguration.LOADING_ANIMATION_DOT_SPINNER:
                     break;
             }
 
@@ -542,13 +551,13 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
 
     @Override
     public void stop() {
-        switch (mToggleSettings.loadingAnimationType) {
-            case ToggleSettings.LOADING_ANIMATION_FLICK:
-            case ToggleSettings.LOADING_ANIMATION_DOT_SPINNER:
-            case ToggleSettings.LOADING_ANIMATION_LINE_SPINNER:
+        switch (mToggleConfiguration.loadingAnimationType) {
+            case ToggleConfiguration.LOADING_ANIMATION_FLICK:
+            case ToggleConfiguration.LOADING_ANIMATION_DOT_SPINNER:
+            case ToggleConfiguration.LOADING_ANIMATION_LINE_SPINNER:
                 exitAnimationRedrawLoop();
                 break;
-            case ToggleSettings.LOADING_ANIMATION_NONE:
+            case ToggleConfiguration.LOADING_ANIMATION_NONE:
                 break;
         }
     }
@@ -568,8 +577,23 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
         return mIsIndicatorAnimating;
     }
 
+    /**
+     *
+     * @return true, if {@link #getIndicatorVisibility()} = {@link ToggleConfiguration#INDICATOR_VISIBLE_SHOW},
+     * and {@link #getIndicatorAnimationType()} is not {@link} {@link ToggleConfiguration#LOADING_ANIMATION_NONE}.
+     */
     public boolean isLoading() {
         return mShowLoading;
+    }
+
+    @ToggleConfiguration.AnimationType
+    public int getIndicatorAnimationType() {
+        return mToggleConfiguration.loadingAnimationType;
+    }
+
+    @ToggleConfiguration.IndicatorVisible
+    public int getIndicatorVisibility() {
+        return mToggleConfiguration.indicatorVisibility;
     }
 
     /* ---------------------------------------------------------------------------------------------
@@ -597,6 +621,47 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int desiredWidth = dpToPx(DEFAULT_WIDTH);
+        int desiredHeight = dpToPx(DEFAULT_HEIGHT);
+
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        int width;
+        int height;
+
+        //Measure Width
+        if (widthMode == MeasureSpec.EXACTLY) {
+            //Must be this size
+            width = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            //Can't be bigger than...
+            width = Math.min(desiredWidth, widthSize);
+        } else {
+            //Be whatever you want
+            width = desiredWidth;
+        }
+
+        //Measure Height
+        if (heightMode == MeasureSpec.EXACTLY) {
+            //Must be this size
+            height = heightSize;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            //Can't be bigger than...
+            height = Math.min(desiredHeight, heightSize);
+        } else {
+            //Be whatever you want
+            height = desiredHeight;
+        }
+
+        //MUST CALL THIS
+        setMeasuredDimension(width, height);
+    }
+
+    @Override
     public boolean performClick() {
         toggle();
         return super.performClick();
@@ -620,7 +685,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
 
         drawBackground(canvas);
         drawToggle(canvas);
-        drawToggleLoadingIndicator(canvas);
+        drawToggleIndicator(canvas);
 
         //drawSun(canvas);
 
@@ -636,48 +701,41 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
      */
 
 
-    private void drawToggleLoadingIndicator(Canvas canvas) {
+    private void drawToggleIndicator(Canvas canvas) {
 
-        if (containsFlag(mToggleSettings.toggleIndicatorVisibility, ToggleSettings.INDICATOR_VISIBLE_SHOW)) {
-            if (mShowLoading) {
+        if (containsFlag(mToggleConfiguration.indicatorVisibility, ToggleConfiguration.INDICATOR_VISIBLE_SHOW)) {
 
-                switch (mToggleSettings.loadingAnimationType) {
-                    case ToggleSettings.LOADING_ANIMATION_LINE_SPINNER:
+
+            switch (mToggleConfiguration.loadingAnimationType) {
+                case ToggleConfiguration.LOADING_ANIMATION_NONE:
+                    drawFlickIndicator(canvas);
+                    break;
+                case ToggleConfiguration.LOADING_ANIMATION_FLICK:
+                    if (mShowLoading) {
+                        drawFlickIndicator(canvas);
+                    }
+                    break;
+                case ToggleConfiguration.LOADING_ANIMATION_LINE_SPINNER: {
+                    if (mShowLoading) {
                         drawLineSpinnerLoadingIndicator(canvas, mPaint);
-                        break;
-                    case ToggleSettings.LOADING_ANIMATION_DOT_SPINNER:
-                        drawDotSpinnerLoadingIndicator(canvas, mPaint);
-                        break;
-                    case ToggleSettings.LOADING_ANIMATION_FLICK: {
-                        if (containsFlag(mToggleSettings.toggleIndicatorVisibility, ToggleSettings.INDICATOR_VISIBLE_SHOW)) {
-                            drawFlickIndicator(canvas);
-                        }
-                        break;
                     }
                 }
+
+                break;
+                case ToggleConfiguration.LOADING_ANIMATION_DOT_SPINNER: {
+                    if (mShowLoading) {
+                        drawDotSpinnerLoadingIndicator(canvas, mPaint);
+                    }
+                }
+                break;
             }
         }
     }
 
-    /**
-     * 圆O的圆心为(a,b),半径为R,点A与到X轴的为角α.
-     * 则点A的坐标为(a+R*cosα,b+R*sinα)
-     *
-     * @param width
-     * @param height
-     * @param radius
-     * @param angle
-     * @return
-     */
-    PointF circleAt(float width, float height, float radius, double angle) {
-        float x = (float) (width / 2f + radius * (Math.cos(angle)));
-        float y = (float) (height / 2f + radius * (Math.sin(angle)));
-        return new PointF(x, y);
-    }
-
     void pointOnCircle(PointF outPoint, PointF circleCenter, float radius, @FloatRange(from = 0, to = 360f) double angle) {
 
-        // 角度 angle -> 弧度 radian
+        // angle -> radian
+        // 角度 -> 弧度
         outPoint.set(
                 (float) (circleCenter.x + (radius * Math.cos(Math.toRadians(angle)))),
                 (float) (circleCenter.y - radius * Math.sin(Math.toRadians(angle))));
@@ -718,10 +776,10 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
         int alphaTo = 50;
 
 
-        // spinner rotated angle
-        float alphaStartAngle = mSpinnerProgress == 0 ? 0 : (1 - mSpinnerProgress) * 360;
+        // spinner rotated angle, will use alphaFrom to set the alpha value of leaf ( blade )
+        float alphaFromAngle = mSpinnerProgress == 0 ? 0 : (1 - mSpinnerProgress) * 360;
 
-//        Log.d(TAG, "------------------------------ alphaStartAngle = " + alphaStartAngle);
+//        Log.d(TAG, "------------------------------ alphaFromAngle = " + alphaFromAngle);
 
         float relativeAngle;
         float relativePercent;
@@ -740,7 +798,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
             canvas.rotate(-leafAngle);
 
 
-            relativeAngle = leafAngle - (alphaStartAngle - 360);
+            relativeAngle = leafAngle - (alphaFromAngle - 360);
             relativeAngle = relativeAngle >= 360 ? relativeAngle - 360 : relativeAngle;
 
             relativePercent = (relativeAngle) / 360f;
@@ -777,7 +835,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     private void drawFlickIndicator(Canvas canvas) {
 
         getCenterRectOfRect(mDrawingToggleRect,
-                mToggleSettings.toggleIndicatorWidth, mToggleSettings.toggleIndicatorHeight,
+                mToggleConfiguration.toggleIndicatorWidth, mToggleConfiguration.toggleIndicatorHeight,
                 mDrawingToggleIndRect);
 
         if (!mIsIndicatorAnimating) {
@@ -786,7 +844,7 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
         // TODO: add corresponding color attribute
         mPaint.setColor(mIndicatorColor);
 
-        canvas.drawRoundRect(mDrawingToggleIndRect, mToggleSettings.toggleIndicatorRadius, mToggleSettings.toggleIndicatorRadius, mPaint);
+        canvas.drawRoundRect(mDrawingToggleIndRect, mToggleConfiguration.toggleIndicatorRadius, mToggleConfiguration.toggleIndicatorRadius, mPaint);
     }
 
     void drawSun(Canvas canvas) {
@@ -834,8 +892,8 @@ public class LoadingToggleButton extends View implements Checkable, Animatable {
     public List<Animator> onCreateAnimators() {
         ArrayList<Animator> valueAnimators = new ArrayList<>();
 
-        switch (mToggleSettings.loadingAnimationType) {
-            case ToggleSettings.LOADING_ANIMATION_LINE_SPINNER: {
+        switch (mToggleConfiguration.loadingAnimationType) {
+            case ToggleConfiguration.LOADING_ANIMATION_LINE_SPINNER: {
 
                 Log.d(TAG, "onCreateAnimators: create line spinner animator");
 

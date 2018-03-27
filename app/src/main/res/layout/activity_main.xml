@@ -7,25 +7,35 @@
     android:layout_height="match_parent"
     tools:context="cn.intret.lab.loadingtogglebutton.MainActivity">
 
+    <TextView
+        android:id="@+id/title_rect_toggle"
+        style="@style/GroupTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rectangle Toggle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,RtlHardcoded"/>
+
     <!--toggle1-->
     <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle_rect1"
-        android:layout_width="50dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_rect_toggle"
         app:ltbBackgroundCheckedColor="@color/colorAccent"
         app:ltbBackgroundRadius="5dp"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
 
-        app:ltbChecked="true"
-        app:ltbDuration="300"
+        app:ltbToggleChecked="true"
         app:ltbToggleCheckedColor="@android:color/white"
+        app:ltbToggleDuration="300"
         app:ltbToggleRadius="4dp"
         app:ltbToggleUncheckedColor="@android:color/white"
-        />
+        tools:ignore="RtlHardcoded"/>
 
     <TextView
         android:id="@+id/log1"
@@ -39,13 +49,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/toggle_rect1"
         app:layout_constraintLeft_toRightOf="@+id/toggle_rect1"
         app:layout_constraintTop_toTopOf="@+id/toggle_rect1"
+        tools:ignore="RtlHardcoded"
         tools:text="it's on"/>
 
     <!--toggle2-->
     <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle_rect2"
-        android:layout_width="50dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,49 +65,106 @@
         app:ltbBackgroundCheckedColor="@color/colorAccent"
         app:ltbBackgroundRadius="5dp"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
-        app:ltbChecked="false"
-        app:ltbDuration="300"
+        app:ltbToggleChecked="false"
         app:ltbToggleCheckedColor="@android:color/white"
+        app:ltbToggleDuration="300"
         app:ltbToggleRadius="4dp"
         app:ltbToggleUncheckedColor="@android:color/white"
+        tools:ignore="RtlHardcoded"/>
+
+
+    <!-- ============================split1=============================-->
+    <View
+        android:id="@+id/split1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:alpha=".1"
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/toggle_rect2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="'Checked' will be changed at end of animation"
+        app:layout_constraintBottom_toBottomOf="@+id/toggle_rect2"
+        app:layout_constraintLeft_toRightOf="@+id/toggle_rect2"
+        app:layout_constraintTop_toTopOf="@+id/toggle_rect2"
+        tools:ignore="HardcodedText,RtlHardcoded"/>
+
+    <TextView
+        android:id="@+id/title_custom_indicator"
+        style="@style/GroupTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Custom Indicator : width, height, radius"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/split1"
         />
 
+    <!--Toggle round 1-->
     <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle_round1"
-        android:layout_width="50dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toggle_rect2"
+        app:layout_constraintTop_toBottomOf="@+id/title_custom_indicator"
         app:ltbBackgroundCheckedColor="@android:color/holo_purple"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
-        app:ltbChecked="false"
-        app:ltbDuration="300"
+        app:ltbIndicatorAnimatingWhen="toggleToOff|toggleToOn"
+        app:ltbIndicatorVisibility="show"
+        app:ltbToggleChecked="true"
         app:ltbToggleCheckedColor="@android:color/white"
-        app:ltbToggleIndicatorVisibility="show"
+        app:ltbToggleDuration="300"
         app:ltbToggleUncheckedColor="@android:color/white"
-        />
+        tools:ignore="RtlHardcoded"/>
 
+    <!--custom indicator-->
+    <cn.intret.lab.library.LoadingToggleButton
+        android:id="@+id/toggle_round_custom_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toRightOf="@id/toggle_round1"
+        app:layout_constraintTop_toTopOf="@+id/toggle_round1"
+        app:ltbBackgroundCheckedColor="@android:color/holo_purple"
+        app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
+        app:ltbIndicatorAnimationType="none"
+        app:ltbIndicatorHeight="8dp"
+        app:ltbIndicatorRadius="4dp"
+        app:ltbIndicatorVisibility="show"
+        app:ltbIndicatorWidth="8dp"
+        app:ltbToggleChecked="true"
+        app:ltbToggleCheckedColor="@android:color/white"
+        app:ltbToggleDuration="300"
+        app:ltbToggleUncheckedColor="@android:color/white"
+        tools:ignore="RtlHardcoded"/>
+
+    <!--Toggle round 2-->
     <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle_round2"
-        android:layout_width="50dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggle_round1"
         app:ltbBackgroundCheckedColor="@android:color/holo_purple"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
-        app:ltbChecked="true"
-        app:ltbDuration="500"
+        app:ltbIndicatorHeight="8dp"
+        app:ltbIndicatorVisibility="show"
+        app:ltbIndicatorWidth="2dp"
+        app:ltbToggleChecked="true"
         app:ltbToggleCheckedColor="@android:color/white"
-        app:ltbToggleIndicatorHeight="8dp"
-        app:ltbToggleIndicatorVisibility="show"
-        app:ltbToggleIndicatorWidth="2dp"
+        app:ltbToggleDuration="500"
         app:ltbToggleUncheckedColor="@android:color/white"
-        />
+        tools:ignore="RtlHardcoded"/>
 
+    <!--Toggle round 2 desc-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,41 +172,65 @@
         android:text="Slow animation + vertical toggle indicator"
         app:layout_constraintBottom_toBottomOf="@+id/toggle_round2"
         app:layout_constraintLeft_toRightOf="@+id/toggle_round2"
-        app:layout_constraintTop_toTopOf="@+id/toggle_round2"/>
+        app:layout_constraintTop_toTopOf="@+id/toggle_round2"
+        tools:ignore="HardcodedText,RtlHardcoded"/>
+
+    <!-- ============================split2=============================-->
+    <View
+        android:id="@+id/split2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:alpha=".1"
+        android:background="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_round2"/>
+
+    <TextView
+        android:id="@+id/tv_title_loading_animation"
+        style="@style/GroupTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading Animation : is shown when toggled to 'checked'"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/split2"
+        tools:ignore="HardcodedText"/>
 
     <!--toggle flicking-->
     <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle_flicking"
-        android:layout_width="50dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toggle_round2"
-        app:ltbBackgroundCheckedColor="@android:color/holo_purple"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_loading_animation"
+        app:ltbBackgroundCheckedColor="@android:color/holo_green_dark"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
-        app:ltbChecked="true"
-        app:ltbDuration="300"
+        app:ltbIndicatorAnimatingWhen="toggleToOn"
+        app:ltbIndicatorAnimationType="flick"
+        app:ltbIndicatorHeight="2dp"
+        app:ltbIndicatorVisibility="show"
+        app:ltbIndicatorWidth="8dp"
+        app:ltbToggleChecked="true"
         app:ltbToggleCheckedColor="@android:color/white"
-        app:ltbToggleIndicatorFlickWhen="toggleToOn"
-        app:ltbToggleIndicatorHeight="2dp"
-        app:ltbToggleIndicatorVisibility="show"
-        app:ltbToggleIndicatorWidth="8dp"
-        app:ltbToggleLoadingAnimationType="flick"
+        app:ltbToggleDuration="300"
         app:ltbToggleUncheckedColor="@android:color/white"
-        />
+        tools:ignore="RtlHardcoded"/>
 
+    <!--toggle flicking desc-->
     <TextView
         android:id="@+id/tv_flicking_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Indicator Flicking"
+        android:text="Indicator Flicking Animation"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/toggle_flicking"
         app:layout_constraintLeft_toRightOf="@+id/toggle_flicking"
         app:layout_constraintTop_toTopOf="@+id/toggle_flicking"
-        />
+        tools:ignore="HardcodedText,RtlHardcoded"/>
 
     <!--Stop flicking-->
     <TextView
@@ -146,34 +238,35 @@
         style="@style/TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="STOP FLICK"
+        android:text="STOP"
         app:layout_constraintBottom_toBottomOf="@+id/toggle_flicking"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toggle_flicking"/>
+        app:layout_constraintTop_toTopOf="@+id/toggle_flicking"
+        tools:ignore="HardcodedText"/>
 
     <!--loading toggle - line spinner-->
     <cn.intret.lab.library.LoadingToggleButton
         android:id="@+id/toggle_line_spinner"
-        android:layout_width="50dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toggle_flicking"
-        app:ltbBackgroundCheckedColor="@android:color/holo_purple"
+        app:ltbBackgroundCheckedColor="@android:color/holo_green_dark"
         app:ltbBackgroundUncheckedColor="@android:color/darker_gray"
-        app:ltbChecked="false"
-        app:ltbDuration="300"
+        app:ltbIndicatorAnimatingWhen="toggleToOn"
+        app:ltbIndicatorAnimationType="lineSpinner"
+        app:ltbIndicatorHeight="2dp"
+        app:ltbIndicatorVisibility="show"
+        app:ltbIndicatorWidth="8dp"
+        app:ltbToggleChecked="true"
         app:ltbToggleCheckedColor="@android:color/white"
-        app:ltbToggleIndicatorFlickWhen="toggleToOn"
-        app:ltbToggleIndicatorHeight="2dp"
-        app:ltbToggleIndicatorVisibility="show"
-        app:ltbToggleIndicatorWidth="8dp"
-        app:ltbToggleLoadingAnimationType="lineSpinner"
+        app:ltbToggleDuration="300"
         app:ltbToggleUncheckedColor="@android:color/white"
-        />
+        tools:ignore="RtlHardcoded"/>
 
+    <!--toggle line-spinner desc-->
     <TextView
         android:id="@+id/tv_loading_status"
         android:layout_width="wrap_content"
@@ -184,16 +277,59 @@
         app:layout_constraintBottom_toBottomOf="@id/toggle_line_spinner"
         app:layout_constraintLeft_toRightOf="@+id/toggle_line_spinner"
         app:layout_constraintTop_toTopOf="@+id/toggle_line_spinner"
-        />
+        tools:ignore="HardcodedText,RtlHardcoded"/>
 
+    <!--btn setting-->
     <TextView
         android:id="@+id/btn_stop_loading"
         style="@style/TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="STOP LOADING"
+        android:text="STOP"
         app:layout_constraintBottom_toBottomOf="@+id/toggle_line_spinner"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toggle_line_spinner"/>
+        app:layout_constraintTop_toTopOf="@+id/toggle_line_spinner"
+        tools:ignore="HardcodedText"/>
+
+    <!-- ============================split3=============================-->
+    <View
+        android:id="@+id/split3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:alpha=".1"
+        android:background="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_line_spinner"/>
+
+    <!--toggle default-->
+    <cn.intret.lab.library.LoadingToggleButton
+        android:id="@+id/toggle_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/split3"
+        app:ltbBackgroundCheckedColor="@android:color/black"
+        app:ltbToggleChecked="true"
+        tools:ignore="RtlHardcoded"/>
+
+    <!--toggle rect-->
+    <cn.intret.lab.library.LoadingToggleButton
+        android:id="@+id/toggle_custom_black"
+        style="@style/RectangleToggle.StaticIndicator.Black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16sp"
+        android:layout_marginTop="16dp"
+        app:ltbTogglePadding="3dp"
+        app:ltbBackgroundCheckedColor="@android:color/black"
+        app:ltbBackgroundUncheckedColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toggle_default"
+        app:ltbToggleChecked="true"
+        tools:ignore="RtlHardcoded"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -6,11 +6,7 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Created by SilenceDut on 16/6/3.
- */
-
-public class ToggleSettings {
+public class ToggleConfiguration {
 
     /*
      * Toggle indicator visibility constants
@@ -54,10 +50,10 @@ public class ToggleSettings {
      */
 
 
-    public static final int BACKGROUND_UNCHECKED_COLOR = Color.parseColor("#7c4dff");
-    public static final int BACKGROUND_CHECKED_COLOR = Color.parseColor("#424242");
+    public static final int BACKGROUND_UNCHECKED_COLOR = Color.parseColor("#AAAAAA"); // dark gray
+    public static final int BACKGROUND_CHECKED_COLOR = Color.parseColor("#3CB6E3"); // summer sky
     public static final int TOGGLE_CHECKED_COLOR = Color.WHITE;
-    public static final int TOGGLE_UNCHECKED_COLOR = Color.parseColor("#ff5722");
+    public static final int TOGGLE_UNCHECKED_COLOR = Color.WHITE;
     public static final int PADDING_DEFAULT = 2;
     public static final int RADIUS_DEFAULT = -1; // half of height
     public static final int DURATION_DEFAULT = 300;
@@ -93,10 +89,10 @@ public class ToggleSettings {
 
 
     @IndicatorVisible
-    public int toggleIndicatorVisibility = INDICATOR_VISIBLE_HIDE;
+    public int indicatorVisibility = INDICATOR_VISIBLE_HIDE;
     public int showIndicatorWhen = SHOW_INDICATOR_WHEN_TOGGLE_TO_ON;
 
-    ToggleSettings() {
+    ToggleConfiguration() {
         this.mBackgroundUnCheckedColor = BACKGROUND_UNCHECKED_COLOR;
         this.mBackgroundCheckedColor = BACKGROUND_CHECKED_COLOR;
         this.mToggleUnCheckedColor = TOGGLE_UNCHECKED_COLOR;
