@@ -1,9 +1,11 @@
 # LoadingToggleButton
+
+
 A toggle button shows loading animation when toggled from 'off' to 'on' status.
 
 ## * Work In Pregress
 
-![](https://ws1.sinaimg.cn/large/006tNc79gy1fpnw8wcybcj31401z4jsp.jpg)
+![](docs/screenshot.png)
 
 ## License
 
@@ -11,7 +13,6 @@ I copied source files from project [DayNightToggleButton](https://github.com/Sil
 
 ```
 Copyright 2018 Chia Chin
-Copyright 2018 SilenceDut
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
